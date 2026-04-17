@@ -18,7 +18,7 @@ Error generating stack: `+u.message+`
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(206,147,216,0.15); border-radius: 3px; }
         * { box-sizing: border-box; }
-      `))}var Ug=(0,Md.createRoot)(document.getElementById("root"));Ug.render(Od.default.createElement(Rf));})();
+      `))}var Ug=Md.default.createRoot(document.getElementById("root"));Ug.render(Od.default.createElement(Rf));})();
 /*! Bundled license information:
 
 react/cjs/react.production.js:
