@@ -4,13 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agentic AI in Banking | HEDY LAB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0F1923; }
+        .back-link {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 100;
+            font-family: 'Outfit', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.25);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .back-link:hover { color: rgba(255,255,255,0.5); }
+        .back-arrow { font-size: 14px; }
+        .copyright {
+            text-align: center;
+            padding: 20px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 10px;
+            color: rgba(255,255,255,0.1);
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
+    <a href="/" class="back-link"><span class="back-arrow">←</span> hedylab.ai</a>
     <div id="root"></div>
+    <div class="copyright">© 2026 Firihan Ahmed. All rights reserved.</div>
     <script src="bundle.js"></script>
 </body>
 </html>
