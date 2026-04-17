@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEDY LAB | by Firihan Ahmed</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #0B1525;
+            --navy-mid: #101D30;
+            --teal: #2A9D8F;
+            --teal-soft: rgba(42, 157, 143, 0.12);
+            --gold: #C9A84C;
+            --gold-soft: rgba(201, 168, 76, 0.08);
+            --cream: #E8E2D6;
+            --cream-soft: rgba(232, 226, 214, 0.6);
+            --cream-faint: rgba(232, 226, 214, 0.08);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--navy);
+            color: var(--cream);
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Ambient background */
+        .ambient {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse at 20% 30%, rgba(42, 157, 143, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(201, 168, 76, 0.04) 0%, transparent 45%),
+                radial-gradient(ellipse at 50% 80%, rgba(42, 157, 143, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(201, 168, 76, 0.03) 0%, transparent 40%);
+        }
+
+        /* Subtle grain overlay */
+        .grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        /* Main container */
+        .page {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 24px;
+        }
+
+        /* Top accent line */
+        .accent-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(180deg, transparent, var(--teal), transparent);
+            opacity: 0.3;
+            margin-bottom: 48px;
+            animation: fadeSlideDown 1.5s ease-out forwards;
+        }
+
+        /* Brand name */
+        .brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(36px, 7vw, 56px);
+            font-weight: 300;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            color: var(--cream);
+            margin-bottom: 8px;
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out 0.3s forwards;
+        }
+
+        /* By line */
+        .byline {
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 4px;
+            color: var(--teal);
+            text-transform: lowercase;
+            margin-bottom: 64px;
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out 0.6s forwards;
+        }
+
+        /* Decorative diamond */
+        .diamond {
+            width: 8px;
+            height: 8px;
+            border: 1px solid var(--gold);
+            transform: rotate(45deg);
+            opacity: 0;
+            margin-bottom: 48px;
+            animation: fadeIn 1s ease-out 0.9s forwards;
+        }
+
+        /* Meditation text */
+        .meditation {
+            text-align: center;
+            max-width: 480px;
+            margin-bottom: 80px;
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out 1.2s forwards;
+        }
+
+        .meditation p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(18px, 3.5vw, 24px);
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1.9;
+            color: var(--cream-soft);
+        }
+
+        /* Coming soon */
+        .coming-soon {
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out 1.5s forwards;
+        }
+
+        .coming-soon p {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        /* Explore link */
+        .explore-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out 2s forwards;
+        }
+
+        .prototype-note {
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: rgba(232, 226, 214, 0.2);
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .explore-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 10px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: rgba(232, 226, 214, 0.2);
+            font-weight: 500;
+        }
+
+        .explore-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: var(--gold);
+            text-decoration: none;
+            padding: 12px 28px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            border-radius: 4px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .explore-link::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(201, 168, 76, 0.05), rgba(42, 157, 143, 0.05));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .explore-link:hover {
+            border-color: rgba(201, 168, 76, 0.4);
+            color: var(--cream);
+            transform: translateY(-1px);
+        }
+
+        .explore-link:hover::before {
+            opacity: 1;
+        }
+
+        .explore-link span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .explore-arrow {
+            font-size: 14px;
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .explore-link:hover .explore-arrow {
+            transform: translateX(4px);
+        }
+
+        /* Bottom section */
+        .bottom {
+            position: absolute;
+            bottom: 32px;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 2.2s forwards;
+        }
+
+        .bottom-dots {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .bottom-dot {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: var(--teal);
+            opacity: 0.2;
+        }
+
+        .bottom-dot.center {
+            width: 4px;
+            height: 4px;
+            opacity: 0.35;
+            background: var(--gold);
+        }
+
+        .bottom-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: rgba(232, 226, 214, 0.12);
+            font-weight: 400;
+        }
+
+        /* Floating constellation dots */
+        .constellation {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--teal);
+            animation: twinkle 4s ease-in-out infinite alternate;
+        }
+
+        .star.gold {
+            background: var(--gold);
+        }
+
+        .star:nth-child(1) { width: 2px; height: 2px; top: 15%; left: 10%; animation-delay: 0s; opacity: 0.15; }
+        .star:nth-child(2) { width: 3px; height: 3px; top: 25%; right: 15%; animation-delay: 1s; opacity: 0.1; }
+        .star:nth-child(3) { width: 2px; height: 2px; top: 60%; left: 8%; animation-delay: 2s; opacity: 0.12; }
+        .star:nth-child(4) { width: 2px; height: 2px; top: 70%; right: 12%; animation-delay: 0.5s; opacity: 0.15; }
+        .star:nth-child(5) { width: 3px; height: 3px; top: 40%; left: 20%; animation-delay: 1.5s; opacity: 0.08; }
+        .star:nth-child(6) { width: 2px; height: 2px; top: 80%; left: 25%; animation-delay: 3s; opacity: 0.1; }
+        .star:nth-child(7) { width: 2px; height: 2px; top: 20%; right: 30%; animation-delay: 2.5s; opacity: 0.12; }
+        .star:nth-child(8) { width: 3px; height: 3px; top: 50%; right: 8%; animation-delay: 0.8s; opacity: 0.1; }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeSlideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 0.3; transform: translateY(0); }
+        }
+
+        @keyframes twinkle {
+            from { opacity: 0.05; }
+            to { opacity: 0.2; }
+        }
+
+        /* Mobile adjustments */
+        @media (max-height: 700px) {
+            .accent-line { height: 30px; margin-bottom: 32px; }
+            .byline { margin-bottom: 40px; }
+            .diamond { margin-bottom: 32px; }
+            .meditation { margin-bottom: 48px; }
+            .bottom { position: relative; bottom: auto; margin-top: 48px; }
+        }
+
+        @media (max-width: 480px) {
+            .brand { letter-spacing: 8px; }
+            .meditation { max-width: 320px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient"></div>
+    <div class="grain"></div>
+
+    <!-- Floating constellation dots -->
+    <div class="constellation">
+        <div class="star"></div>
+        <div class="star gold"></div>
+        <div class="star"></div>
+        <div class="star gold"></div>
+        <div class="star"></div>
+        <div class="star gold"></div>
+        <div class="star"></div>
+        <div class="star gold"></div>
+    </div>
+
+    <div class="page">
+        <!-- Top accent line -->
+        <div class="accent-line"></div>
+
+        <!-- Brand -->
+        <h1 class="brand">Hedy Lab</h1>
+        <p class="byline">by Firihan Ahmed</p>
+
+        <!-- Diamond separator -->
+        <div class="diamond"></div>
+
+        <!-- Meditation text -->
+        <div class="meditation">
+            <p>We are meditating on something beautiful.<br>
+            Where insight takes shape<br>
+            and everything falls into place.</p>
+        </div>
+
+        <!-- Coming soon -->
+        <div class="coming-soon">
+            <p>Coming Soon</p>
+        </div>
+
+        <!-- Prototypes section -->
+        <div class="explore-section">
+            <span class="explore-label">Prototypes</span>
+            <a href="/agentic-banking" class="explore-link">
+                <span>Agentic AI in Banking</span>
+                <span class="explore-arrow">&rarr;</span>
+            </a>
+            <span class="prototype-note">Concept demo with simulated data</span>
+        </div>
+
+        <!-- Bottom -->
+        <div class="bottom">
+            <div class="bottom-dots">
+                <div class="bottom-dot"></div>
+                <div class="bottom-dot"></div>
+                <div class="bottom-dot center"></div>
+                <div class="bottom-dot"></div>
+                <div class="bottom-dot"></div>
+            </div>
+            <span class="bottom-text">hedylab.ai</span>
+        </div>
+    </div>
+
+</body>
+</html>
