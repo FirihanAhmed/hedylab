@@ -14,19 +14,13 @@
 
         :root {
             --navy: #0B1525;
-            --navy-mid: #101D30;
             --teal: #2A9D8F;
-            --teal-soft: rgba(42, 157, 143, 0.12);
             --gold: #C9A84C;
-            --gold-soft: rgba(201, 168, 76, 0.08);
             --cream: #E8E2D6;
             --cream-soft: rgba(232, 226, 214, 0.6);
-            --cream-faint: rgba(232, 226, 214, 0.08);
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             background: var(--navy);
@@ -49,7 +43,7 @@
                 radial-gradient(ellipse at 90% 90%, rgba(201, 168, 76, 0.03) 0%, transparent 40%);
         }
 
-        /* Subtle grain overlay */
+        /* Grain */
         .grain {
             position: fixed;
             inset: 0;
@@ -68,7 +62,7 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            padding: 40px 24px;
+            padding: 60px 24px 100px;
         }
 
         /* Top accent line */
@@ -107,7 +101,7 @@
             animation: fadeIn 1.2s ease-out 0.6s forwards;
         }
 
-        /* Decorative diamond */
+        /* Diamond */
         .diamond {
             width: 8px;
             height: 8px;
@@ -115,14 +109,19 @@
             transform: rotate(45deg);
             opacity: 0;
             margin-bottom: 48px;
-            animation: fadeIn 1s ease-out 0.9s forwards;
+            animation: fadeIn 1s ease-out 0.9s forwards, diamondPulse 4s ease-in-out 2s infinite;
+        }
+
+        @keyframes diamondPulse {
+            0%, 100% { border-color: rgba(201,168,76,0.4); }
+            50% { border-color: rgba(201,168,76,0.8); box-shadow: 0 0 8px rgba(201,168,76,0.15); }
         }
 
         /* Meditation text */
         .meditation {
             text-align: center;
             max-width: 480px;
-            margin-bottom: 80px;
+            margin-bottom: 56px;
             opacity: 0;
             animation: fadeIn 1.2s ease-out 1.2s forwards;
         }
@@ -136,7 +135,7 @@
             color: var(--cream-soft);
         }
 
-        /* Coming soon */
+        /* Coming soon with shimmer */
         .coming-soon {
             margin-bottom: 48px;
             opacity: 0;
@@ -149,10 +148,19 @@
             font-weight: 500;
             letter-spacing: 6px;
             text-transform: uppercase;
-            color: var(--gold);
+            background: linear-gradient(90deg, var(--gold) 0%, rgba(232,226,214,0.8) 50%, var(--gold) 100%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s ease-in-out 2s infinite;
         }
 
-        /* Explore link */
+        @keyframes shimmer {
+            0% { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
+
+        /* Prototypes section */
         .explore-section {
             display: flex;
             flex-direction: column;
@@ -160,6 +168,7 @@
             gap: 16px;
             opacity: 0;
             animation: fadeIn 1.2s ease-out 2s forwards;
+            margin-bottom: 20px;
         }
 
         .prototype-note {
@@ -211,11 +220,10 @@
             border-color: rgba(201, 168, 76, 0.4);
             color: var(--cream);
             transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(201, 168, 76, 0.1);
         }
 
-        .explore-link:hover::before {
-            opacity: 1;
-        }
+        .explore-link:hover::before { opacity: 1; }
 
         .explore-link span {
             position: relative;
@@ -233,12 +241,9 @@
             transform: translateX(4px);
         }
 
-        /* Bottom section */
+        /* Bottom section - NOT absolute, flows naturally */
         .bottom {
-            position: absolute;
-            bottom: 32px;
-            left: 0;
-            right: 0;
+            margin-top: 64px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -276,9 +281,10 @@
             font-weight: 400;
         }
 
-        /* Floating constellation dots */
+        /* Floating constellation dots that drift */
         .constellation {
             position: fixed;
+            inset: 0;
             pointer-events: none;
             z-index: 1;
         }
@@ -287,21 +293,27 @@
             position: absolute;
             border-radius: 50%;
             background: var(--teal);
-            animation: twinkle 4s ease-in-out infinite alternate;
         }
 
-        .star.gold {
-            background: var(--gold);
-        }
+        .star.gold { background: var(--gold); }
 
-        .star:nth-child(1) { width: 2px; height: 2px; top: 15%; left: 10%; animation-delay: 0s; opacity: 0.15; }
-        .star:nth-child(2) { width: 3px; height: 3px; top: 25%; right: 15%; animation-delay: 1s; opacity: 0.1; }
-        .star:nth-child(3) { width: 2px; height: 2px; top: 60%; left: 8%; animation-delay: 2s; opacity: 0.12; }
-        .star:nth-child(4) { width: 2px; height: 2px; top: 70%; right: 12%; animation-delay: 0.5s; opacity: 0.15; }
-        .star:nth-child(5) { width: 3px; height: 3px; top: 40%; left: 20%; animation-delay: 1.5s; opacity: 0.08; }
-        .star:nth-child(6) { width: 2px; height: 2px; top: 80%; left: 25%; animation-delay: 3s; opacity: 0.1; }
-        .star:nth-child(7) { width: 2px; height: 2px; top: 20%; right: 30%; animation-delay: 2.5s; opacity: 0.12; }
-        .star:nth-child(8) { width: 3px; height: 3px; top: 50%; right: 8%; animation-delay: 0.8s; opacity: 0.1; }
+        .star:nth-child(1) { width: 2px; height: 2px; top: 15%; left: 10%; animation: drift1 20s ease-in-out infinite, twinkle 4s ease-in-out infinite alternate; opacity: 0.15; }
+        .star:nth-child(2) { width: 3px; height: 3px; top: 25%; right: 15%; animation: drift2 25s ease-in-out infinite, twinkle 4s 1s ease-in-out infinite alternate; opacity: 0.1; }
+        .star:nth-child(3) { width: 2px; height: 2px; top: 60%; left: 8%; animation: drift3 22s ease-in-out infinite, twinkle 4s 2s ease-in-out infinite alternate; opacity: 0.12; }
+        .star:nth-child(4) { width: 2px; height: 2px; top: 70%; right: 12%; animation: drift4 18s ease-in-out infinite, twinkle 4s 0.5s ease-in-out infinite alternate; opacity: 0.15; }
+        .star:nth-child(5) { width: 3px; height: 3px; top: 40%; left: 20%; animation: drift5 24s ease-in-out infinite, twinkle 4s 1.5s ease-in-out infinite alternate; opacity: 0.08; }
+        .star:nth-child(6) { width: 2px; height: 2px; top: 80%; left: 25%; animation: drift6 20s ease-in-out infinite, twinkle 4s 3s ease-in-out infinite alternate; opacity: 0.1; }
+        .star:nth-child(7) { width: 2px; height: 2px; top: 20%; right: 30%; animation: drift7 26s ease-in-out infinite, twinkle 4s 2.5s ease-in-out infinite alternate; opacity: 0.12; }
+        .star:nth-child(8) { width: 3px; height: 3px; top: 50%; right: 8%; animation: drift8 21s ease-in-out infinite, twinkle 4s 0.8s ease-in-out infinite alternate; opacity: 0.1; }
+
+        @keyframes drift1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(15px,-20px)} }
+        @keyframes drift2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-20px,15px)} }
+        @keyframes drift3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(10px,18px)} }
+        @keyframes drift4 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-12px,-15px)} }
+        @keyframes drift5 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(18px,10px)} }
+        @keyframes drift6 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-15px,-12px)} }
+        @keyframes drift7 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(12px,20px)} }
+        @keyframes drift8 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-18px,14px)} }
 
         /* Animations */
         @keyframes fadeIn {
@@ -319,13 +331,14 @@
             to { opacity: 0.2; }
         }
 
-        /* Mobile adjustments */
+        /* Mobile */
         @media (max-height: 700px) {
             .accent-line { height: 30px; margin-bottom: 32px; }
             .byline { margin-bottom: 40px; }
             .diamond { margin-bottom: 32px; }
-            .meditation { margin-bottom: 48px; }
-            .bottom { position: relative; bottom: auto; margin-top: 48px; }
+            .meditation { margin-bottom: 36px; }
+            .coming-soon { margin-bottom: 32px; }
+            .bottom { margin-top: 40px; }
         }
 
         @media (max-width: 480px) {
@@ -352,29 +365,23 @@
     </div>
 
     <div class="page">
-        <!-- Top accent line -->
         <div class="accent-line"></div>
 
-        <!-- Brand -->
         <h1 class="brand">Hedy Lab</h1>
         <p class="byline">by Firihan Ahmed</p>
 
-        <!-- Diamond separator -->
         <div class="diamond"></div>
 
-        <!-- Meditation text -->
         <div class="meditation">
             <p>We are meditating on something beautiful.<br>
             Where insight takes shape<br>
             and everything falls into place.</p>
         </div>
 
-        <!-- Coming soon -->
         <div class="coming-soon">
             <p>Coming Soon</p>
         </div>
 
-        <!-- Prototypes section -->
         <div class="explore-section">
             <span class="explore-label">Prototypes</span>
             <a href="/agentic-banking" class="explore-link">
@@ -384,7 +391,6 @@
             <span class="prototype-note">Concept demo with simulated data</span>
         </div>
 
-        <!-- Bottom -->
         <div class="bottom">
             <div class="bottom-dots">
                 <div class="bottom-dot"></div>
@@ -394,7 +400,7 @@
                 <div class="bottom-dot"></div>
             </div>
             <span class="bottom-text">hedylab.ai</span>
-            <span class="bottom-text" style="margin-top:8px">© 2026 Firihan Ahmed. All rights reserved.</span>
+            <span class="bottom-text" style="margin-top:6px">© 2026 Firihan Ahmed. All rights reserved.</span>
         </div>
     </div>
 
