@@ -4,7 +4,6 @@ by Firihan Ahmed
 
 A personal lab for AI prototypes, experiments, and creative explorations.
 
-Named after Hedy Lamarr — the Hollywood actress who secretly invented the frequency-hopping technology that became the foundation of WiFi and Bluetooth. Nobody expected it. Nobody saw it coming.
 
 🔗 [hedylab.ai](https://hedylab.ai)
 
